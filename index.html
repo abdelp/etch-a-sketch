@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <style>
+            :root {
+                --colNum: 16;
+            }
+
+            .grid-container {
+                display: grid; 
+                width: 90%;
+                height: 90%; 
+                margin: 0 auto;
+                grid-template-columns: repeat(var(--colNum), auto);
+                grid-template-rows: repeat(var(--colNum), auto);
+
+            }
+
+            .grid-item {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                font-size: 30px;
+                text-align: center;
+            }
+
+            .button-wrapper {
+                margin: 20px;
+                text-align: center;
+
+            }
+
+            .myButton {
+                box-shadow:inset 0px 1px 0px 0px #54a3f7;
+                background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+                background-color:#007dc1;
+                border-radius:3px;
+                border:1px solid #124d77;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:13px;
+                padding:6px 24px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #154682;
+            }
+
+            .myButton:hover {
+                background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+                background-color:#0061a7;
+            }
+
+            .myButton:active {
+                position:relative;
+                top:1px;
+            }
+        </style>
+
+        <script>
+            function getRandomRgba() {
+                var o = Math.round, r = Math.random, s = 255;
+                return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+            }
+
+            function createGrid(squaresPerSide) {
+                document.documentElement.style.setProperty("--colNum", squaresPerSide);
+
+                let grid = document.getElementById("grid-container");
+
+                for(let i = 0; i < squaresPerSide; i++) {
+                    for(let j = 0; j < squaresPerSide; j++) {
+                        let elem = document.createElement("div");
+                        
+                        elem.className = "grid-item";
+                        elem.onmouseover = function() { changeColor(elem) }; 
+
+                        grid.appendChild(elem);
+                    }
+                }
+            }
+
+            function changeColor(elem) {
+                elem.style.backgroundColor = getRandomRgba();
+            }
+
+            function resetGrid() {
+                let grid = document.getElementById("grid-container");
+
+                grid.childNodes.forEach(child => {
+                    child.style.backgroundColor = "white";
+                });
+
+                const squaresPerSide = prompt("how many squares per side to make the new grid?");
+
+                grid.innerHTML = "";
+
+                createGrid(squaresPerSide);
+            }
+        </script>
+    </head>
+    <body onload="createGrid(16)">
+        <div id="grid-container" class="grid-container"></div>
+        <div class="button-wrapper">
+            <button class="myButton" onclick="resetGrid()">Reset Grid</button>
+        </div>
+    </body>
+</html>
