@@ -84,15 +84,23 @@
 
             function resetGrid() {
                 let grid = document.getElementById("grid-container");
+                let validNumber = false;
 
                 grid.childNodes.forEach(child => {
                     child.style.backgroundColor = "white";
                 });
 
-                const squaresPerSide = prompt("how many squares per side to make the new grid?");
+                let squaresPerSide = prompt("How many squares per side to make the new grid?");
+                validNumber = Number.isInteger(parseInt(squaresPerSide));
+                console.log(parseInt(squaresPerSide));
+
+                while(!validNumber) {
+                    squaresPerSide = prompt("Please select a valid number");
+                    validNumber = Number.isInteger(parseInt(squaresPerSide));
+                    console.log(parseInt(squaresPerSide));
+                }
 
                 grid.innerHTML = "";
-
                 createGrid(squaresPerSide);
             }
         </script>
